@@ -1,8 +1,8 @@
-
 import aminofix
 from threading import Thread
 import random
 import os
+import time
 
 def com():
     subclients = you.sub_clients(size=100)
@@ -53,10 +53,10 @@ def check():
      for comId in you.sub_clients(size=80).comId:
          sub_client = amino.SubClient(comId=comId, profile=you.profile)
          try:
-             sub_client.check_in('0')
-             print("+check")
+            sub_client.check_in('0')
+            print("+check")
          except:
-             print("was checked")
+            print("was checked")
 
 def renimg():
     if os.path.exists("imgfl5.jpg"):
@@ -73,100 +73,38 @@ def renimg():
         os.rename('imgfl0.jpg','imgfl1.jpg')
 
 def chatbot():
-	oldmsg = []
-	imgfl = 0
-	while msg != "exit":
-		msglist = subclient.get_chat_messages(chatId=thid,size = 1)
-		if msglist.messageId in oldmsg: pass
-		else:
-			if msglist.mediaType[0] == 100:
-				renimg()
-				url_img = requests.get(msglist.mediaValue[0])
-				out = open('imgfl0.jpg', 'wb')
-				out.write(url_img.content)
-				out.close()
-				shutil.copyfile( 'imgfl0.jpg' , 'allimg/imgfl'+str(len(os.listdir(path="./allimg")))+'.jpg' )
-				print("download")
-			if msglist.mediaType[0] == 0:
-				if (msglist.content[0].split()[0] =="!roll"):
-					oldmsg.append(msglist.messageId)
-					if (msglist.content[0].split()[1][0] =='d'):
-						tyr = str(msglist.content[0].split()[1])
-						subclient.send_message(chatId=thid, message=str(random.randint(1, int(tyr[1:]))), messageType=109)
-					elif (msglist.content[0].split()[1][0].isdigit()):
-						dnad = 0
-						tyr1 = 0
-						tyr2 = 0
-						tyr3 = []
-						for i in range(len(msglist.content[0].split()[1])):
-							if msglist.content[0].split()[1][i] == 'd':
-								dnad = 1
-							else:
-								if dnad == 0:
-									tyr2 = tyr2*10+int(msglist.content[0].split()[1][i])
-								if dnad == 1:
-									tyr1 = tyr1*10+int(msglist.content[0].split()[1][i])
-						tyr2 = tyr2 % 100
-						if dnad == 0:
-							subclient.send_message(chatId=thid, message=str(random.randint(1, tyr2)), messageType=109)
-						else:
-							for i in range(tyr2):
-								tyr3.append(random.randint(1, int(tyr1)))
-							subclient.send_message(chatId=thid, message=str(tyr3), messageType=109)
-				if  (msglist.content[0].split()[0][0] == '!'):
-					if (msglist.content[0] == "!last"):
-						subclient.send_message(message='MESSAGE', chatId=thid, file=open("imgfl0.jpg", "rb"), fileType="image")
-						oldmsg.append(subclient.get_chat_messages(chatId=thid,size = 1).messageId[0])
-					if (msglist.content[0][:5] == "!last" and (msglist.content[0][5].isdigit() or msglist.content[0][6].isdigit())):
-						subclient.send_message(message='MESSAGE', chatId=thid, file=open("imgfl"+str(int(msglist.content[0][5] + msglist.content[0][6]))+".jpg", "rb"), fileType="image")
-						oldmsg.append(subclient.get_chat_messages(chatId=thid,size = 1).messageId[0])
-					oldmsg.append(msglist.messageId)
-					if (msglist.content[0].split()[0][1] =='d'):
-						tyr = str(msglist.content[0].split()[1])
-						subclient.send_message(chatId=thid, message=str(random.randint(1, int(tyr[2:]))), messageType=109)
-					elif(msglist.content[0].split()[0][1].isdigit()):
-						dnad = 0
-						tyr1 = 0
-						tyr2 = 0
-						tyr3 = []
-						for i in range(len(msglist.content[0].split()[0])):
-							if msglist.content[0].split()[0][i] == 'd':
-								dnad = 1
-							elif msglist.content[0].split()[0][i] == '!':
-								print("bot")
-							else:
-								if dnad == 0:
-									tyr2 = tyr2*10+int(msglist.content[0].split()[0][i])
-								if dnad == 1:
-									tyr1 = tyr1*10+int(msglist.content[0].split()[0][i])
-						tyr2 = tyr2 % 100
-						if dnad == 0:
-							subclient.send_message(chatId=thid, message=str(random.randint(1, tyr2)), messageType=109)
-						else:
-							for i in range(tyr2):
-								tyr3.append(random.randint(1, int(tyr1)))
-							subclient.send_message(chatId=thid, message=str(tyr3), messageType=109)
-			oldmsg.append(msglist.messageId)
+    oldmsg = []
+    while msg != "exit":
+        msglist = subclient.get_chat_messages(chatId=thid,size = 1)
+        if not (msglist.messageId in oldmsg): 
+            if  (msglist.content[0].split()[0][0] == '!'):
+                if (msglist.content[0] == "!last"):
+                    subclient.send_message(message='MESSAGE', chatId=thid, file=open("imgfl0.jpg", "rb"), fileType="image")
+                    oldmsg.append(subclient.get_chat_messages(chatId=thid,size = 1).messageId[0])
+                elif (msglist.content[0][:5] == "!roll" or msglist.content[0][:2] == "!r"):
+                    if (msglist.content[0].split()[1].find("d")>-1):
+                        col_rl = msglist.content[0].split()[1].split("d")[0]
+                        max_rl = msglist.content[0].split()[1].split("d")[1]
+                        if (col_rl == "1"):
+                            subclient.send_message(chatId=thid, message=str(random.randint(0,int(max_rl))), messageType=109)
+                        else:
+                            sum=0
+                            rl_list = ""
+                            for i in range(min(int(col_rl),100)):
+                                rl = random.randint(0,int(max_rl))
+                                sum += rl
+                                rl_list += str(rl)+" "
+                            subclient.send_message(chatId=thid, message=rl_list+" = "+str(sum), messageType=109)
+                    elif (msglist.content[0].split()[1].isdigit):
+                        subclient.send_message(chatId=thid, message=str(random.randint(0,int(msglist.content[0].split()[1]))), messageType=109)
+            oldmsg.append(msglist.messageId)
 
 def chatmsg():
     oldmsg = []
     msglist = subclient.get_chat_messages(chatId=thid,size = 5)
-    for i in range(5):
-        if msglist.messageId in oldmsg: pass
-        else:
-            if msglist.mediaType[0] == 0 or msglist.mediaType[0] == 109:
-                print("")
-                print("------------\/msg\/------------")
-                print(msglist.author.nickname[i],": ",msglist.content[i])
-                print(msglist.author.level[i])
-                print(msglist.createdTime[i])
-                print(msglist.mediaType[i])
-                print("------------/\msg/\------------")
-                oldmsg.append(msglist.messageId)
-    while (msg != "exit_chat_bot" or msg != "stop_bot"):
+    while (msg != "exit_chat_bot" and msg != "stop_bot"):
         msglist = subclient.get_chat_messages(chatId=thid,size = 1)
-        if msglist.messageId in oldmsg: pass
-        else:
+        if not(msglist.messageId in oldmsg): 
             if msglist.mediaType[0] == 0 or msglist.mediaType[0] == 109:
                 print("")
                 print("------------\/msg\/------------")
@@ -191,10 +129,10 @@ def spam(str, col):
     while (col2 != 0 and msg != "stop_bot" and msg != "stop_spam"):
         col2 = col2-1
         subclient.send_message(chatId=thid, message=str, messageType=type_msg)
-    
+
 def regist():
     if (not os.path.exists('dontsend.txt')):
-        os.makedirs('dontsend.txt')
+        open('dontsend.txt', 'w+')
     sv = open('dontsend.txt', 'r+')
     msg = str(input("open, or login:"))
     if (msg == "open"):
@@ -204,13 +142,13 @@ def regist():
         for line in sv:
             emaillist[0].append(list(map( str,line.split()))[0])
             emaillist[1].append(list(map(str,line.split()))[1])
+            print(line_cn,' ',list(map( str,line.split()))[0])
             line_cn = line_cn+1
         print("-------------------------------")
-        line_cn = int(input("namber:"))-1
+        line_cn = int(input("number:"))-1
         email = emaillist[0][line_cn]
         password = emaillist[1][line_cn]
-        print(email)
-    else (msg == "login"):
+    else:
         email=input("email:")
         password=input("passwor:")
         msg = str(input("save?"))
@@ -219,30 +157,41 @@ def regist():
             sv.write(line)
     sv.close()
     you.login(email=email, password=password)
- 
+
+random.seed(time.time())
 task1 = Thread(target=chatbot)
 task2 = Thread(target=chatmsg)
 you = aminofix.Client()
 regist()
 msg = "o"
 
-    
+
 type_msg = 109
 while (msg != "stop_bot"):
     subclient = aminofix.SubClient(comId=com() , profile=you.profile)
-    while (msg != "change_com_bot" or msg != "stop_bot"):
+    msg = "o"
+    while (msg != "exit_com" and msg != "stop_bot"):
         thid = chat()
         task1.start()
         task2.start()
-        while (msg != "change_com_bot" or msg != "stop_bot" or msg != "exit_chat_bot" ):
+        while (msg != "exit_com" and msg != "stop_bot" and msg != "exit_chat" ):
             msg = str(input("msg:"))
             if (msg == "start_spam"):
                 spam_msg = str(input("what:"))
                 col = int(input("how mutch (-1 - inf):"))
                 task3 = Thread(target=spam, args=(spam_msg, col))
-
                 task3.start()
             elif (msg == "sel_type"):
                 type_msg = int(input("type of messges:"))
-            else:
+            elif (msg == "send_img"):
+                subclient.send_message(message='MESSAGE', chatId=thid, file=open(str(include("path or name of img:")), "rb"), fileType="image")
+            elif (msg == "help"):
+                print("stop_bot - stop all bot's process")
+                print("exit_com - change community")
+                print("exit_chat - change chat")
+                print("stop_spam - stop inf spam")
+                print("sel_type - select type of message")
+                print("start_spam - start spam")
+                print("send_img - send image")
+            elif (msg != "exit_com" and msg != "stop_bot" and msg != "exit_chat" and msg != "stop_spam"):
                 subclient.send_message(chatId=thid, message=msg, messageType=type_msg)
