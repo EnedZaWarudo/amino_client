@@ -196,12 +196,16 @@ while (msg != "stop_bot"):
     msg = str(input("task:"))
     if(msg == "check"):
         task4.start()
+    elif(msg == "money"):
+        claim_new_user_coupon()
     elif(msg == "help"):
         print("")
         print("check - check in all comunity")
+        print("money - get new coupon")
         print("com - select comunity")
         print("help - info about comands")
-    subclient = aminofix.SubClient(comId=com() , profile=you.profile)
+    comid= com()
+    subclient = aminofix.SubClient(comId= comid, profile=you.profile)
     msg = "o"
     while (msg != "exit_com" and msg != "stop_bot"):
         thid = chat()
@@ -218,6 +222,24 @@ while (msg != "stop_bot"):
                 type_msg = int(input("type of messges:"))
             elif (msg == "send_img"):
                 subclient.send_message(message='MESSAGE', chatId=thid, file=open(str(input("path or name of img:")), "rb"), fileType="image")
+            elif (msg == "get_users"):
+                print(get_all_users(start=int(input("start")),size=int(input("size"))))
+            elif (msg == "get_avatar"):
+                print(get_avatar_frames(start=int(input("start")),size=int(input("size"))))
+            elif (msg == "chat_users"):
+                print(get_chat_users(chatid = thid, start=int(input("start")),size=int(input("size"))))
+            elif (msg == "get_com_info"):
+                print(get_community_info(comid=comid ))
+            elif (msg == "get_subscriptions"):
+                print(get_subscriptions(start=int(input("start")),size=int(input("size"))))
+            elif (msg == "get_bubble"):
+                print(get_bubble_template_list(start=int(input("start")),size=int(input("size"))))
+            elif (msg == "get_noti"):
+                print(get_notices(start=int(input("start")),size=int(input("size"))))
+            elif (msg == "online_users"):
+                print(get_online_users(start=int(input("start")),size=int(input("size"))))
+            elif (msg == "get_not"):
+                print(get_notifications(start=int(input("start")),size=int(input("size"))))
             elif (msg == "help"):
                 print("stop_bot - stop all bot's process")
                 print("exit_com - change community")
@@ -225,6 +247,8 @@ while (msg != "stop_bot"):
                 print("stop_spam - stop inf spam")
                 print("sel_type - select type of message")
                 print("start_spam - start spam")
+                print("get_users - get list of users")
+                print("get_avatar - get list of user's avatar")
                 print("send_img - send image")
                 print("help - info about comands")
             else:
