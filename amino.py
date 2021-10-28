@@ -10,7 +10,7 @@ def com():
     print("-------------com--------------")
     idarray = []
     fff = 0
-    for name, id in zip(subclients.name ,subclients.comId):
+    for name, id in zip(subclients.name, subclients.comId):
         idarray.insert(fff, id)
         fff = fff+1
         print(fff, name)
@@ -78,64 +78,64 @@ def renimg():
     if os.path.exists("imgfl5.jpg"):
         os.remove("imgfl5.jpg")
     if os.path.exists("imgfl4.jpg"):
-        os.rename('imgfl4.jpg','imgfl5.jpg')
+        os.rename('imgfl4.jpg', 'imgfl5.jpg')
     if os.path.exists("imgfl3.jpg"):
-        os.rename('imgfl3.jpg','imgfl4.jpg')
+        os.rename('imgfl3.jpg', 'imgfl4.jpg')
     if os.path.exists("imgfl2.jpg"):
-        os.rename('imgfl2.jpg','imgfl3.jpg')
+        os.rename('imgfl2.jpg', 'imgfl3.jpg')
     if os.path.exists("imgfl1.jpg"):
-        os.rename('imgfl1.jpg','imgfl2.jpg')
+        os.rename('imgfl1.jpg', 'imgfl2.jpg')
     if os.path.exists("imgfl0.jpg"):
-        os.rename('imgfl0.jpg','imgfl1.jpg')
+        os.rename('imgfl0.jpg', 'imgfl1.jpg')
 
 
 def chatbot():
     oldmsg = []
     while msg != "exit":
-        msglist = subclient.get_chat_messages(chatId=thid,size = 2)
+        msglist = subclient.get_chat_messages(chatId=thid, size = 2)
         if not (msglist.messageId in oldmsg): 
             if (msglist.mediaType[0] == 109 or msglist.mediaType[0] == 0):
                 if  (msglist.content[0].split()[0][0] == '!'):
                     if (msglist.content[0][:5] == "!last"):
                         if msglist.content[0] != "!last":
-                            msglist = subclient.get_chat_messages(chatId=thid,size = msglist.content[0].split()[1])
+                            msglist = subclient.get_chat_messages(chatId=thid, size = msglist.content[0].split()[1])
                             if (msglist.mediaType[-1] == 113):
-                                subclient.send_message(chatId=thid, message=msglist.mediaValue[-1] , messageType=0)
+                                subclient.send_message(chatId=thid, message=msglist.mediaValue[-1], messageType=0)
                         else:
                             if (msglist.mediaType[-1] == 113):
-                                subclient.send_message(chatId=thid, message=msglist.mediaValue[-1] , messageType=0)
+                                subclient.send_message(chatId=thid, message=msglist.mediaValue[-1], messageType=0)
                             else:
                                 subclient.send_message(message='MESSAGE', chatId=thid, file=open("imgfl0.jpg", "rb"), fileType="image")
-                            oldmsg.append(subclient.get_chat_messages(chatId=thid,size = 1).messageId[0])
+                            oldmsg.append(subclient.get_chat_messages(chatId=thid, size = 1).messageId[0])
                     elif (msglist.content[0][:5] == "!roll" or msglist.content[0][:2] == "!r"):
                         if (msglist.content[0].split()[1].find("d")>-1):
                             col_rl = msglist.content[0].split()[1].split("d")[0]
                             max_rl = msglist.content[0].split()[1].split("d")[1]
                             if (col_rl == "1"):
-                                subclient.send_message(chatId=thid, message=str(random.randint(0,int(max_rl))), messageType=109)
+                                subclient.send_message(chatId=thid, message=str(random.randint(0, int(max_rl))), messageType=109)
                             else:
                                 sum=0
                                 rl_list = ""
-                                for i in range(min(int(col_rl),100)):
-                                    rl = random.randint(0,int(max_rl))
+                                for i in range(min(int(col_rl), 100)):
+                                    rl = random.randint(0, int(max_rl))
                                     sum += rl
                                     rl_list += str(rl)+" "
                                 subclient.send_message(chatId=thid, message=rl_list+" = "+str(sum), messageType=109)
                         elif (msglist.content[0].split()[1].isdigit):
-                            subclient.send_message(chatId=thid, message=str(random.randint(0,int(msglist.content[0].split()[1]))), messageType=109)
+                            subclient.send_message(chatId=thid, message=str(random.randint(0, int(msglist.content[0].split()[1]))), messageType=109)
             oldmsg.append(msglist.messageId)
 
 
 def chatmsg():
     oldmsg = []
-    msglist = subclient.get_chat_messages(chatId=thid,size = 5)
+    msglist = subclient.get_chat_messages(chatId=thid, size = 5)
     while (msg != "exit_chat_bot" and msg != "stop_bot"):
-        msglist = subclient.get_chat_messages(chatId=thid,size = 1)
+        msglist = subclient.get_chat_messages(chatId=thid, size = 1)
         if not(msglist.messageId in oldmsg): 
             if msglist.mediaType[0] == 0 or msglist.mediaType[0] == 109:
                 print("")
                 print("------------\/msg\/------------")
-                print(msglist.author.nickname[-1],": ",msglist.content[-1])
+                print(msglist.author.nickname[-1], ": ", msglist.content[-1])
                 print(msglist.author.level[-1])
                 print(msglist.createdTime[-1])
                 print(msglist.mediaType[-1])
@@ -143,7 +143,7 @@ def chatmsg():
             elif msglist.mediaType[0] == 100 or msglist.mediaType[0] == 113:
                 print("")
                 print("------------\/msg\/------------")
-                print(msglist.author.nickname[-1],": ",msglist.mediaValue[-1])
+                print(msglist.author.nickname[-1], ": ", msglist.mediaValue[-1])
                 print(msglist.author.level[-1])
                 print(msglist.createdTime[-1])
                 print(msglist.mediaType[-1])
@@ -166,12 +166,12 @@ def login():
     if (msg == "open"):
         print("------------emails-------------")
         line_cn = 1
-        emaillist =[[],[]]
+        emaillist =[[], []]
         for line in sv:
                 
-            emaillist[0].append(list(map( str,line.split()))[0])
-            emaillist[1].append(list(map(str,line.split()))[1])
-            print(line_cn,' ',list(map( str,line.split()))[0])
+            emaillist[0].append(list(map( str, line.split()))[0])
+            emaillist[1].append(list(map(str, line.split()))[1])
+            print(line_cn, ' ', list(map( str, line.split()))[0])
             line_cn = line_cn+1
         print("-------------------------------")
         line_cn = int(input("number:"))-1
@@ -223,33 +223,33 @@ while (msg != "stop_bot"):
                 subclient.send_message(message='MESSAGE', chatId=thid, file=open(str(input("path or name of img:")), "rb"), fileType="image")
 
             elif (msg == "user_hist"):
-                print(subclient.moderation_history(userid = str(input("id:")),size=int(input("size:"))))
+                print(subclient.moderation_history(userid = str(input("id:")), size=int(input("size:"))))
 
             elif (msg == "chat_users"):
-                print(subclient.get_chat_users(chatid=thid,start=int(input("start:")),size=int(input("size:"))))
+                print(subclient.get_chat_users(chatid=thid, start=int(input("start:")), size=int(input("size:"))))
 
             elif (msg == "user_id"):
-                print(subclient.search_users(nickname = str(input("nick:")),start=int(input("start:")),size=int(input("size:"))).userId)
+                print(subclient.search_users(nickname = str(input("nick:")), start=int(input("start:")), size=int(input("size:"))).userId)
 
             elif (msg == "get_bubble"):
-                print(subclient.get_store_chat_bubbles(start=int(input("start:")),size=int(input("size:"))))
+                print(subclient.get_store_chat_bubbles(start=int(input("start:")), size=int(input("size:"))))
 
             elif (msg == "online_users"):
-                print(subclient.get_online_users(start=int(input("start:")),size=int(input("size:"))))
+                print(subclient.get_online_users(start=int(input("start:")), size=int(input("size:"))))
 
             elif (msg == "get_not"):
-                print(subclient.get_notifications(start=int(input("start:")),size=int(input("size:"))).__dict__)
+                print(subclient.get_notifications(start=int(input("start:")), size=int(input("size:"))).__dict__)
 
             elif (msg == "get_avatar"):
-                print(subclient.get_avatar_frames(start=int(input("start:")),size=int(input("size:"))).__dict__)
+                print(subclient.get_avatar_frames(start=int(input("start:")), size=int(input("size:"))).__dict__)
 
             elif (msg == "user_blogs_id"):
-               blog = subclient.get_user_blogs(userId=(subclient.search_users(nickname = str(input("nick:")),start=0,size=1).userId)[0],start=int(input("start:")),size=int(input("size:")))
+               blog = subclient.get_user_blogs(userId=(subclient.search_users(nickname = str(input("nick:")), start=0, size=1).userId)[0], start=int(input("start:")), size=int(input("size:")))
                print(blog.blogId)
                print(blog.title)
 
             elif (msg == "send_coins"):
-                subclient.send_coins(coins=int(input("how much:")),blogId = str(input("id")))
+                subclient.send_coins(coins=int(input("how much:")), blogId = str(input("id")))
 
             elif(msg == "check"):
                 task4.start()
