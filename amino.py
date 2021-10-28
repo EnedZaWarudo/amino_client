@@ -134,20 +134,20 @@ def chatmsg():
         if not(msglist.messageId in oldmsg): 
             if msglist.mediaType[0] == 0 or msglist.mediaType[0] == 109:
                 print("")
-                print("------------\/msg\/------------")
+                print("------------\\/msg\\/------------")
                 print(msglist.author.nickname[-1], ": ", msglist.content[-1])
                 print(msglist.author.level[-1])
                 print(msglist.createdTime[-1])
                 print(msglist.mediaType[-1])
-                print("------------/\msg/\------------")
+                print("------------/\\msg/\\------------")
             elif msglist.mediaType[0] == 100 or msglist.mediaType[0] == 113:
                 print("")
-                print("------------\/msg\/------------")
+                print("------------\\/msg\\/------------")
                 print(msglist.author.nickname[-1], ": ", msglist.mediaValue[-1])
                 print(msglist.author.level[-1])
                 print(msglist.createdTime[-1])
                 print(msglist.mediaType[-1])
-                print("------------/\msg/\------------")
+                print("------------/\\msg/\\------------")
             oldmsg.append(msglist.messageId)
 
 
