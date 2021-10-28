@@ -4,20 +4,17 @@ import random
 import os
 import time
 
-
-# Print formated list of all bot's communities
-def print_communities():
+def com():
     subclients = you.sub_clients(size=100)
-    print("------------- community --------------")
+    print("-------------com--------------")
     idarray = []
     fff = 0
     for name, id in zip(subclients.name ,subclients.comId):
         idarray.insert(fff, id)
-        fff += 1
-        print(fff, name, id)
-    print("------------- community --------------")
+        fff = fff+1
+        print(fff, name)
+    print("-------------com--------------")
     return(idarray[int(input("number: "))-1])
-
 
 def chat():
     print("-------------chats--------------")
@@ -50,7 +47,7 @@ def chat():
             for name, id in zip(subclient.get_public_chat_threads().title, subclient.get_public_chat_threads().chatId):
                 idarray3.insert(fff, id)
                 fff = fff+1
-                print(fff, name, id)
+                print(fff, name)
             print("-----------new_chats------------")
             fff = int(input("number: "))
             subclient.join_chat(idarray3[fff-1])
@@ -59,7 +56,6 @@ def chat():
                 return idarray2[int(type)-1]
             else:
                 return idarray2[int(input("number: "))-1]
-
 
 def check():
      sub_com = you.sub_clients(size=80)
@@ -74,7 +70,6 @@ def check():
          except:
                  print(name+" banned :(")
 
-
 def renimg():
     if os.path.exists("imgfl5.jpg"):
         os.remove("imgfl5.jpg")
@@ -88,7 +83,6 @@ def renimg():
         os.rename('imgfl1.jpg','imgfl2.jpg')
     if os.path.exists("imgfl0.jpg"):
         os.rename('imgfl0.jpg','imgfl1.jpg')
-
 
 def chatbot():
     oldmsg = []
@@ -126,7 +120,6 @@ def chatbot():
                             subclient.send_message(chatId=thid, message=str(random.randint(0,int(msglist.content[0].split()[1]))), messageType=109)
             oldmsg.append(msglist.messageId)
 
-
 def chatmsg():
     oldmsg = []
     msglist = subclient.get_chat_messages(chatId=thid,size = 5)
@@ -151,15 +144,13 @@ def chatmsg():
                 print("------------/\msg/\------------")
             oldmsg.append(msglist.messageId)
 
-
 def spam(str, col):
     col2 = col
     while (col2 != 0 and msg != "stop_bot" and msg != "stop_spam"):
         col2 = col2-1
         subclient.send_message(chatId=thid, message=str, messageType=type_msg)
 
-
-def regist():
+def login():
     if (not os.path.exists('dontsend.txt')):
         open('dontsend.txt', 'w+')
     sv = open('dontsend.txt', 'r+')
@@ -169,6 +160,7 @@ def regist():
         line_cn = 1
         emaillist =[[],[]]
         for line in sv:
+                
             emaillist[0].append(list(map( str,line.split()))[0])
             emaillist[1].append(list(map(str,line.split()))[1])
             print(line_cn,' ',list(map( str,line.split()))[0])
@@ -192,28 +184,16 @@ def regist():
     sv.close()
     you.login(email=email, password=password)
 
-
 random.seed(time.time())
 task1 = Thread(target=chatbot)
 task2 = Thread(target=chatmsg)
 task4 = Thread(target=check)
 you = aminofix.Client()
-regist()
+login()
 msg = "o"
 
 type_msg = 109
 while (msg != "stop_bot"):
-    msg = str(input("task:"))
-    if(msg == "check"):
-        task4.start()
-    elif(msg == "money"):
-        claim_new_user_coupon()
-    elif(msg == "help"):
-        print("")
-        print("check - check in all comunity")
-        print("money - get new coupon")
-        print("com - select comunity")
-        print("help - info about comands")
     comid= com()
     subclient = aminofix.SubClient(comId= comid, profile=you.profile)
     msg = "o"
@@ -232,33 +212,50 @@ while (msg != "stop_bot"):
                 type_msg = int(input("type of messges:"))
             elif (msg == "send_img"):
                 subclient.send_message(message='MESSAGE', chatId=thid, file=open(str(input("path or name of img:")), "rb"), fileType="image")
-            elif (msg == "get_users"):
-                print(get_all_users(start=int(input("start")),size=int(input("size"))))
-            elif (msg == "get_avatar"):
-                print(get_avatar_frames(start=int(input("start")),size=int(input("size"))))
+
+            elif (msg == "user_hist"):
+                print(subclient.moderation_history(userid = str(input("id:")),size=int(input("size:"))))
+
             elif (msg == "chat_users"):
-                print(get_chat_users(chatid = thid, start=int(input("start")),size=int(input("size"))))
-            elif (msg == "get_com_info"):
-                print(get_community_info(comid=comid ))
-            elif (msg == "get_subscriptions"):
-                print(get_subscriptions(start=int(input("start")),size=int(input("size"))))
+                print(subclient.get_chat_users(chatid=thid,start=int(input("start:")),size=int(input("size:"))))
+
+            elif (msg == "user_id"):
+                print(subclient.search_users(nickname = str(input("nick:")),start=int(input("start:")),size=int(input("size:"))).userId)
+
             elif (msg == "get_bubble"):
-                print(get_bubble_template_list(start=int(input("start")),size=int(input("size"))))
-            elif (msg == "get_noti"):
-                print(get_notices(start=int(input("start")),size=int(input("size"))))
+                print(subclient.get_store_chat_bubbles(start=int(input("start:")),size=int(input("size:"))))
+
             elif (msg == "online_users"):
-                print(get_online_users(start=int(input("start")),size=int(input("size"))))
+                print(subclient.get_online_users(start=int(input("start:")),size=int(input("size:"))))
+
             elif (msg == "get_not"):
-                print(get_notifications(start=int(input("start")),size=int(input("size"))))
-            elif (msg == "help"):
+                print(subclient.get_notifications(start=int(input("start:")),size=int(input("size:"))).__dict__)
+
+            elif (msg == "get_avatar"):
+                print(subclient.get_avatar_frames(start=int(input("start:")),size=int(input("size:"))).__dict__)
+
+            elif (msg == "user_blogs_id"):
+               blog = subclient.get_user_blogs(userId=(subclient.search_users(nickname = str(input("nick:")),start=0,size=1).userId)[0],start=int(input("start:")),size=int(input("size:")))
+               print(blog.blogId)
+               print(blog.title)
+
+            elif (msg == "send_coins"):
+                subclient.send_coins(coins=int(input("how much:")),blogId = str(input("id")))
+
+            elif(msg == "check"):
+                task4.start()
+            elif(msg == "money"):
+                you.claim_new_user_coupon()
+            elif(msg == "help"):
+                print("")
+                print("check - check in all comunity")
+                print("money - get new coupon")
                 print("stop_bot - stop all bot's process")
                 print("exit_com - change community")
                 print("exit_chat - change chat")
                 print("stop_spam - stop inf spam")
                 print("sel_type - select type of message")
                 print("start_spam - start spam")
-                print("get_users - get list of users")
-                print("get_avatar - get list of user's avatar")
                 print("send_img - send image")
                 print("help - info about comands")
             else:
