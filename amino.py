@@ -71,7 +71,7 @@ def check():
             except:
                 print(name+" was checked")
         except:
-                print(name+" banned :(")
+            print(name+" banned :(")
 
 
 def renimg():
@@ -95,7 +95,7 @@ def chatbot():
         msglist = subclient.get_chat_messages(chatId=thid, size = 2)
         if not (msglist.messageId in oldmsg):
             if (msglist.mediaType[0] == 109 or msglist.mediaType[0] == 0):
-                if  (msglist.content[0].split()[0][0] == '!'):
+                if (msglist.content[0].split()[0][0] == '!'):
                     if (msglist.content[0][:5] == "!last"):
                         if msglist.content[0] != "!last":
                             msglist = subclient.get_chat_messages(chatId=thid, size = msglist.content[0].split()[1])
