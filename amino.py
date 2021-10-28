@@ -4,6 +4,7 @@ import random
 import os
 import time
 
+
 def com():
     subclients = you.sub_clients(size=100)
     print("-------------com--------------")
@@ -15,6 +16,7 @@ def com():
         print(fff, name)
     print("-------------com--------------")
     return(idarray[int(input("number: "))-1])
+
 
 def chat():
     print("-------------chats--------------")
@@ -57,6 +59,7 @@ def chat():
             else:
                 return idarray2[int(input("number: "))-1]
 
+
 def check():
      sub_com = you.sub_clients(size=80)
      for comId, name in zip(sub_com.comId, sub_com.name):
@@ -69,6 +72,7 @@ def check():
                  print(name+" was checked")
          except:
                  print(name+" banned :(")
+
 
 def renimg():
     if os.path.exists("imgfl5.jpg"):
@@ -83,6 +87,7 @@ def renimg():
         os.rename('imgfl1.jpg','imgfl2.jpg')
     if os.path.exists("imgfl0.jpg"):
         os.rename('imgfl0.jpg','imgfl1.jpg')
+
 
 def chatbot():
     oldmsg = []
@@ -120,6 +125,7 @@ def chatbot():
                             subclient.send_message(chatId=thid, message=str(random.randint(0,int(msglist.content[0].split()[1]))), messageType=109)
             oldmsg.append(msglist.messageId)
 
+
 def chatmsg():
     oldmsg = []
     msglist = subclient.get_chat_messages(chatId=thid,size = 5)
@@ -144,11 +150,13 @@ def chatmsg():
                 print("------------/\msg/\------------")
             oldmsg.append(msglist.messageId)
 
+
 def spam(str, col):
     col2 = col
     while (col2 != 0 and msg != "stop_bot" and msg != "stop_spam"):
         col2 = col2-1
         subclient.send_message(chatId=thid, message=str, messageType=type_msg)
+
 
 def login():
     if (not os.path.exists('dontsend.txt')):
@@ -183,6 +191,7 @@ def login():
             sv.write("\n"+line)
     sv.close()
     you.login(email=email, password=password)
+
 
 random.seed(time.time())
 task1 = Thread(target=chatbot)
