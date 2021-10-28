@@ -210,7 +210,7 @@ while (msg != "stop_bot"):
         thid = chat()
         task1.start()
         task2.start()
-        while (msg != "exit_com" and msg != "stop_bot" and msg != "exit_chat" ):
+        while (msg != "exit_com" and msg != "stop_bot" and msg != "exit_chat"):
             msg = str(input("msg:"))
             if (msg == "start_spam"):
                 spam_msg = str(input("what:"))
@@ -268,5 +268,5 @@ while (msg != "stop_bot"):
                 print("send_img - send image")
                 print("help - info about comands")
             else:
-                if (msg != "exit_com" and msg != "stop_bot" and msg != "exit_chat" ):
+                if (msg != "exit_com" and msg != "stop_bot" and msg != "exit_chat"):
                     subclient.send_message(chatId=thid, message=msg, messageType=type_msg)
