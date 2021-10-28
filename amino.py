@@ -4,16 +4,17 @@ import random
 import os
 import time
 
-def com():
+# Print formated list of all bot's communities
+def print_communities():
     subclients = you.sub_clients(size=100)
-    print("-------------com--------------")
+    print("------------- community --------------")
     idarray = []
     fff = 0
     for name, id in zip(subclients.name ,subclients.comId):
         idarray.insert(fff, id)
-        fff = fff+1
+        fff += 1
         print(fff, name, id)
-    print("-------------com--------------")
+    print("------------- community --------------")
     return(idarray[int(input("number: "))-1])
 
 def chat():
