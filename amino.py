@@ -168,9 +168,9 @@ def login():
         line_cn = 1
         emaillist =[[], []]
         for line in sv:
-            emaillist[0].append(list(map( str, line.split()))[0])
+            emaillist[0].append(list(map(str, line.split()))[0])
             emaillist[1].append(list(map(str, line.split()))[1])
-            print(line_cn, ' ', list(map( str, line.split()))[0])
+            print(line_cn, ' ', list(map(str, line.split()))[0])
             line_cn = line_cn+1
         print("-------------------------------")
         line_cn = int(input("number:"))-1
