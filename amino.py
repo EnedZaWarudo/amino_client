@@ -22,7 +22,8 @@ def chat():
     print("-------------chats--------------")
     idarray2 = []
     fff = 0
-    for name, id in zip(subclient.get_chat_threads(size = 200).title, subclient.get_chat_threads(size = 200).chatId):
+    for name, id in zip(subclient.get_chat_threads(size = 200).title,
+                        subclient.get_chat_threads(size = 200).chatId):
         idarray2.insert(fff, id)
         fff += 1
         print(fff, name, id)
@@ -46,7 +47,9 @@ def chat():
             print("-----------new_chats------------")
             idarray3 = []
             fff = 0
-            for name, id in zip(subclient.get_public_chat_threads().title, subclient.get_public_chat_threads().chatId):
+            threadList = subclient.get_public_chat_threads()
+            for name, id in zip(threadList.title,
+                                threadList.chatId):
                 idarray3.insert(fff, id)
                 fff += 1
                 print(fff, name)
@@ -64,7 +67,8 @@ def check():
     sub_com = you.sub_clients(size=80)
     for comId, name in zip(sub_com.comId, sub_com.name):
         try:
-            sub_client = aminofix.SubClient(comId=comId, profile=you.profile)
+            sub_client = aminofix.SubClient(comId=comId,
+                                            profile=you.profile)
             try:
                 sub_client.check_in('0')
                 print(name+" +check")
