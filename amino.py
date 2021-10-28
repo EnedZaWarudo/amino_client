@@ -12,10 +12,10 @@ def com():
     fff = 0
     for name, id in zip(subclients.name, subclients.comId):
         idarray.insert(fff, id)
-        fff = fff+1
+        fff += 1
         print(fff, name)
     print("-------------com--------------")
-    return(idarray[int(input("number: "))-1])
+    return(idarray[int(input("number: ")) - 1])
 
 
 def chat():
@@ -48,7 +48,7 @@ def chat():
             fff = 0
             for name, id in zip(subclient.get_public_chat_threads().title, subclient.get_public_chat_threads().chatId):
                 idarray3.insert(fff, id)
-                fff = fff+1
+                fff += 1
                 print(fff, name)
             print("-----------new_chats------------")
             fff = int(input("number: "))
@@ -57,7 +57,7 @@ def chat():
             if type.isdigit():
                 return idarray2[int(type)-1]
             else:
-                return idarray2[int(input("number: "))-1]
+                return idarray2[int(input("number: ")) - 1]
 
 
 def check():
@@ -108,15 +108,15 @@ def chatbot():
                                 subclient.send_message(message='MESSAGE', chatId=thid, file=open("imgfl0.jpg", "rb"), fileType="image")
                             oldmsg.append(subclient.get_chat_messages(chatId=thid, size = 1).messageId[0])
                     elif (msglist.content[0][:5] == "!roll" or msglist.content[0][:2] == "!r"):
-                        if (msglist.content[0].split()[1].find("d")>-1):
+                        if (msglist.content[0].split()[1].find("d") > -1):
                             col_rl = msglist.content[0].split()[1].split("d")[0]
                             max_rl = msglist.content[0].split()[1].split("d")[1]
                             if (col_rl == "1"):
                                 subclient.send_message(chatId=thid, message=str(random.randint(0, int(max_rl))), messageType=109)
                             else:
-                                sum=0
+                                sum = 0
                                 rl_list = ""
-                                for i in range(min(int(col_rl), 100)):
+                                for _ in range(min(int(col_rl), 100)):
                                     rl = random.randint(0, int(max_rl))
                                     sum += rl
                                     rl_list += str(rl)+" "
@@ -154,7 +154,7 @@ def chatmsg():
 def spam(str, col):
     col2 = col
     while (col2 != 0 and msg != "stop_bot" and msg != "stop_spam"):
-        col2 = col2-1
+        col2 -= 1
         subclient.send_message(chatId=thid, message=str, messageType=type_msg)
 
 
@@ -166,14 +166,14 @@ def login():
     if (msg == "open"):
         print("------------emails-------------")
         line_cn = 1
-        emaillist =[[], []]
+        emaillist = [[], []]
         for line in sv:
             emaillist[0].append(list(map(str, line.split()))[0])
             emaillist[1].append(list(map(str, line.split()))[1])
             print(line_cn, ' ', list(map(str, line.split()))[0])
-            line_cn = line_cn+1
+            line_cn += 1
         print("-------------------------------")
-        line_cn = int(input("number:"))-1
+        line_cn = int(input("number:")) - 1
         email = emaillist[0][line_cn]
         password = emaillist[1][line_cn]
     elif (type == "help"):
@@ -182,12 +182,12 @@ def login():
         print("login - login by email and password")
         print("help - info about comands")
     else:
-        email=input("email:")
-        password=input("passwor:")
+        email = input("email:")
+        password = input("passwor:")
         msg = str(input("save?"))
         if (msg == "yes"):
             line = email+" "+password
-            sv.write("\n"+line)
+            sv.write("\n" + line)
     sv.close()
     you.login(email=email, password=password)
 
@@ -202,7 +202,7 @@ msg = "o"
 
 type_msg = 109
 while (msg != "stop_bot"):
-    comid= com()
+    comid = com()
     subclient = aminofix.SubClient(comId= comid, profile=you.profile)
     msg = "o"
     while (msg != "exit_com" and msg != "stop_bot"):
