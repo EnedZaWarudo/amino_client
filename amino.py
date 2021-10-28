@@ -24,7 +24,7 @@ def chat():
     fff = 0
     for name, id in zip(subclient.get_chat_threads(size = 200).title, subclient.get_chat_threads(size = 200).chatId):
         idarray2.insert(fff, id)
-        fff = fff+1
+        fff += 1
         print(fff, name, id)
     print("-------------chats--------------")
     print("open, leav, join, exit")
