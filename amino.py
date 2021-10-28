@@ -93,7 +93,7 @@ def chatbot():
     oldmsg = []
     while msg != "exit":
         msglist = subclient.get_chat_messages(chatId=thid, size = 2)
-        if not (msglist.messageId in oldmsg): 
+        if not (msglist.messageId in oldmsg):
             if (msglist.mediaType[0] == 109 or msglist.mediaType[0] == 0):
                 if  (msglist.content[0].split()[0][0] == '!'):
                     if (msglist.content[0][:5] == "!last"):
@@ -131,7 +131,7 @@ def chatmsg():
     msglist = subclient.get_chat_messages(chatId=thid, size = 5)
     while (msg != "exit_chat_bot" and msg != "stop_bot"):
         msglist = subclient.get_chat_messages(chatId=thid, size = 1)
-        if not(msglist.messageId in oldmsg): 
+        if not(msglist.messageId in oldmsg):
             if msglist.mediaType[0] == 0 or msglist.mediaType[0] == 109:
                 print("")
                 print("------------\\/msg\\/------------")
