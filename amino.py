@@ -68,9 +68,9 @@ def check():
             try:
                 sub_client.check_in('0')
                 print(name+" +check")
-            except:
+            except Exception:
                 print(name+" was checked")
-        except:
+        except Exception:
             print(name+" banned :(")
 
 
