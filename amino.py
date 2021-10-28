@@ -61,17 +61,17 @@ def chat():
 
 
 def check():
-     sub_com = you.sub_clients(size=80)
-     for comId, name in zip(sub_com.comId, sub_com.name):
-         try:
-             sub_client = aminofix.SubClient(comId=comId, profile=you.profile)
-             try:
-                 sub_client.check_in('0')
-                 print(name+" +check")
-             except:
-                 print(name+" was checked")
-         except:
-                 print(name+" banned :(")
+    sub_com = you.sub_clients(size=80)
+    for comId, name in zip(sub_com.comId, sub_com.name):
+        try:
+            sub_client = aminofix.SubClient(comId=comId, profile=you.profile)
+            try:
+                sub_client.check_in('0')
+                print(name+" +check")
+            except:
+                print(name+" was checked")
+        except:
+                print(name+" banned :(")
 
 
 def renimg():
@@ -243,9 +243,9 @@ while (msg != "stop_bot"):
                 print(subclient.get_avatar_frames(start=int(input("start:")), size=int(input("size:"))).__dict__)
 
             elif (msg == "user_blogs_id"):
-               blog = subclient.get_user_blogs(userId=(subclient.search_users(nickname = str(input("nick:")), start=0, size=1).userId)[0], start=int(input("start:")), size=int(input("size:")))
-               print(blog.blogId)
-               print(blog.title)
+                blog = subclient.get_user_blogs(userId=(subclient.search_users(nickname = str(input("nick:")), start=0, size=1).userId)[0], start=int(input("start:")), size=int(input("size:")))
+                print(blog.blogId)
+                print(blog.title)
 
             elif (msg == "send_coins"):
                 subclient.send_coins(coins=int(input("how much:")), blogId = str(input("id")))
