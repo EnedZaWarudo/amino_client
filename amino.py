@@ -259,17 +259,17 @@ while (msg != "stop_bot"):
             elif(msg == "money"):
                 you.claim_new_user_coupon()
             elif(msg == "help"):
-                print("")
-                print("check - check in all comunity")
-                print("money - get new coupon")
-                print("stop_bot - stop all bot's process")
-                print("exit_com - change community")
-                print("exit_chat - change chat")
-                print("stop_spam - stop inf spam")
-                print("sel_type - select type of message")
-                print("start_spam - start spam")
-                print("send_img - send image")
-                print("help - info about comands")
+                print()
+                print("check       - check in all comunity")
+                print("money       - get new coupon")
+                print("stop_bot    - stop all bot's process")
+                print("exit_com    - change community")
+                print("exit_chat   - change chat")
+                print("stop_spam   - stop inf spam")
+                print("sel_type    - select type of message")
+                print("start_spam  - start spam")
+                print("send_img    - send image")
+                print("help        - info about comands")
             else:
                 if (msg != "exit_com" and msg != "stop_bot" and msg != "exit_chat"):
                     subclient.send_message(chatId=thid, message=msg, messageType=type_msg)
